@@ -18,12 +18,11 @@ public class Main {
             test_print_writer.println("test_created of String");
             test_print_writer.close();                                                               //всегда нужно закрывать файл после его использования
             if (!test_file.exists()) {                                                               //exists() от библиотеки import java.io.File;  проверяет что файл создан
-
                 test_file.createNewFile();                                                           //createNewFile() создает новый файл по пути, который передан в конструктор
             }
             test_buffered_reader = new BufferedReader(new FileReader("New_Test_File.txt"));
             String line;
-            while ((line = test_buffered_reader.readLine()) != null) {
+            while ((line = test_buffered_reader.readLine()) != null) {                              //создал строку line в которую буду записывать строки из файла .readLine() пока не будет строка равна пустоте т.е. файл закончился != null
                 System.out.println(line);
 
             }
