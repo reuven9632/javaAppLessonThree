@@ -5,10 +5,40 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class Main {
-
     public static void main(String[] args) {
+
+        //крестики нолики
+        X_O ixith_and_ziros = new X_O();
+
+
+
+
+
+
+
+
+
+
+
+        //Работа с потоками данных (Threads)
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*//Запись и чтение данных из файлов (Java io)
+
         BufferedReader test_buffered_reader = null;                                                  //переменная типпа BufferedReader создаю пустой(null)
         try {
             File test_file = new File("New_Test_File.txt");                                 //создание переменнтой file типа File, передаем в конструктор имя файла или каталога
@@ -35,7 +65,7 @@ public class Main {
             }   catch (IOException e) {
                 System.out.println("Error :" + e);
             }
-        }
+        }*/
 
     }
 }
