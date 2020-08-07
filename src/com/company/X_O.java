@@ -1,7 +1,7 @@
 package com.company;
 
 
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class X_O {
@@ -73,44 +73,65 @@ public class X_O {
     public void sequence_users() {
         if (this.who_is_first() == 1) {
             for (int i = 0; i <= (size_array_game_zone * size_array_game_zone); i++) {
-                this.question_where_is_your_turn(SimbolFirstUser, NameFirstUser);
-                this.question_where_is_your_turn(SimbolSecondUser, NameSecondUser);
+                this.question_your_turn(SimbolFirstUser, NameFirstUser);
+                this.question_your_turn(SimbolSecondUser, NameSecondUser);
             }
         }
         else{
             for (int i = 0; i <= (size_array_game_zone * size_array_game_zone); i++) {
-                this.question_where_is_your_turn(SimbolSecondUser, NameSecondUser);
-                this.question_where_is_your_turn(SimbolFirstUser, NameFirstUser);
+                this.question_your_turn(SimbolSecondUser, NameSecondUser);
+                this.question_your_turn(SimbolFirstUser, NameFirstUser);
             }
         }
     }
-    public void question_where_is_your_turn (String char_X_O, String name) {
+    public void question_your_turn (String char_X_O, String name) {
         this.ptint_game();
-        System.out.println(name + " now it's your turn");
-        System.out.println("enter a column, then lead the row of finding your move");
-        int column = this.UserData.nextInt() - 1;
-        int row = this.UserData.nextInt() - 1;
         boolean correct_move = false;
-        while (correct_move == false)
-        {
-            if (array_game_zone[row][column] == null) {//if column/row free then write data
-                array_game_zone[row][column] = char_X_O;
-                correct_move = true;
+
+
+        int column = 0;
+        int row = 0;
+
+        System.out.println(name + " now it's your turn");
+        do {
+            boolean catch_error = false;
+            do {
+                try {
+                    System.out.println("enter a column, then lead the row of finding your move");
+                    column = this.UserData.nextInt() - 1;
+                    if (column < 0 || column > size_array_game_zone)
+                        System.out.println("Error: column size not possible");
+                    row = this.UserData.nextInt() - 1;
+                    if (row < 0 || row > size_array_game_zone)
+                        System.out.println("Error: row size not possible");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Error: " + e);
+                    catch_error = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: " + e);
+                    catch_error = true;
+                }
             }
-            else {
-                System.out.println("Error: data cell occupied, try again");
-                System.out.println("enter a column, then lead the row of finding your move");
-                column = this.UserData.nextInt() - 1;
-                row = this.UserData.nextInt() - 1;
-                correct_move = false;
+            while (catch_error == true);
+            try {
+                if (array_game_zone[row][column] == null) {//if column/row free then write data
+                    array_game_zone[row][column] = char_X_O;
+                    correct_move = true;
+                } else {
+                    System.out.println("Error: data cell occupied, try again");
+                    correct_move = false;
+                }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Error: " + e);
+                catch_error = true;
             }
         }
-
-
+        while (correct_move == false);
     }
     public void ptint_game () {
         for (int i = 0; i <= (size_array_game_zone); i++)
-            System.out.print("--- --");
+            System.out.print("______");
         System.out.println("\n");
         for (int column = 0; column <= size_array_game_zone-1; column++) {
             for (int row = 0; row <= size_array_game_zone-1; row++) {
@@ -118,7 +139,9 @@ public class X_O {
             }
             System.out.println("\n");
         }
-
+        for (int i = 0; i <= (size_array_game_zone); i++)
+            System.out.print("======");
+        System.out.println("\n");
     }
     public void start_game() {
         this.game_zone();
