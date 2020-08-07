@@ -85,35 +85,58 @@ public class X_O {
         }
     }
     public void question_your_turn (String char_X_O, String name) {
-        this.ptint_game();
-        boolean correct_move = false;
+        this.print_game();
+//        boolean correct_move;
+        boolean catch_error;
 
 
-        int column = 0;
-        int row = 0;
+        int column;
+        int row;
 
         System.out.println(name + " now it's your turn");
         do {
-            boolean catch_error = false;
-            do {
-                try {
-                    System.out.println("enter a column, then lead the row of finding your move");
-                    column = this.UserData.nextInt() - 1;
-                    if (column < 0 || column > size_array_game_zone)
-                        System.out.println("Error: column size not possible");
-                    row = this.UserData.nextInt() - 1;
-                    if (row < 0 || row > size_array_game_zone)
-                        System.out.println("Error: row size not possible");
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Error: " + e);
-                    catch_error = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("Error: " + e);
+            System.out.println("enter a column, then lead the row of finding your move");
+            column = this.UserData.nextInt() - 1;
+            if (column >= 0 && column <= size_array_game_zone) {
+                row = this.UserData.nextInt() - 1;
+                if (row >= 0 && row <= size_array_game_zone) {
+                    if (array_game_zone[row][column] == null) {//if column/row free then write data
+                        array_game_zone[row][column] = char_X_O;
+                        catch_error = false;
+                    } else {
+                        System.out.println("Error: data cell occupied, try again");
+                        catch_error = true;
+                    }
+                } else {
+                    System.out.println("Error: row size not possible");
                     catch_error = true;
                 }
+            } else {
+                System.out.println("Error: column size not possible");
+                catch_error = true;
             }
-            while (catch_error == true);
+        }
+        while (catch_error);
+
+        //or
+        /*do {
             try {
+                do {
+                    System.out.println("enter a column, then lead the row of finding your move");
+                    column = this.UserData.nextInt() - 1;
+                    if (column < 0 || column > size_array_game_zone) {
+                        System.out.println("Error: column size not possible");
+                        catch_error = true;
+                    } else {
+                        catch_error = false;
+                        row = this.UserData.nextInt() - 1;
+                        if (row < 0 || row > size_array_game_zone) {
+                            System.out.println("Error: row size not possible");
+                            catch_error = true;
+                        }
+                    }
+                }
+                while (catch_error);
                 if (array_game_zone[row][column] == null) {//if column/row free then write data
                     array_game_zone[row][column] = char_X_O;
                     correct_move = true;
@@ -121,15 +144,14 @@ public class X_O {
                     System.out.println("Error: data cell occupied, try again");
                     correct_move = false;
                 }
-
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException | InputMismatchException e) {
                 System.out.println("Error: " + e);
                 catch_error = true;
             }
         }
-        while (correct_move == false);
+        while (!correct_move);*/
     }
-    public void ptint_game () {
+    public void print_game () {
         for (int i = 0; i <= (size_array_game_zone); i++)
             System.out.print("______");
         System.out.println("\n");
